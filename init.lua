@@ -921,23 +921,6 @@ require('lazy').setup({
     --      vim.cmd.colorscheme 'tokyonight-night'
     --    end,
   },
-  {
-    'projekt0n/github-nvim-theme',
-    name = 'github-theme',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require('github-theme').setup {
-        -- 你可以在这里添加额外的配置选项
-        -- 例如，强制使用浅色模式
-        options = {
-          -- background = 'light', -- 不直接设置这个，而是通过vim.cmd("colorscheme github_light")
-        },
-      }
-      -- 在这里设置 colorscheme
-      vim.cmd 'colorscheme github_light'
-    end,
-  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
