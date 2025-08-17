@@ -89,6 +89,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.background = 'light'
+vim.opt.clipboard = 'unnamedplus' --using system clipboard
+vim.opt.hlsearch = true
+vim.o.ttimeout = true
+vim.o.timeoutlen = 100
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -915,6 +920,23 @@ require('lazy').setup({
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     --      vim.cmd.colorscheme 'tokyonight-night'
     --    end,
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('github-theme').setup {
+        -- 你可以在这里添加额外的配置选项
+        -- 例如，强制使用浅色模式
+        options = {
+          -- background = 'light', -- 不直接设置这个，而是通过vim.cmd("colorscheme github_light")
+        },
+      }
+      -- 在这里设置 colorscheme
+      vim.cmd 'colorscheme github_light'
+    end,
   },
 
   -- Highlight todo, notes, etc in comments
