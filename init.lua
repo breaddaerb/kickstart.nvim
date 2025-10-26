@@ -89,7 +89,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.opt.background = 'light'
+--vim.opt.background = 'light'
 vim.opt.clipboard = 'unnamedplus' --using system clipboard
 vim.opt.hlsearch = true
 vim.o.ttimeout = true
@@ -97,6 +97,13 @@ vim.o.timeoutlen = 100
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+
+-- open up a horizontal terminal
+vim.keymap.set('n', '<leader>termh', ':below split | terminal<CR>', {
+  noremap = true,
+  silent = true,
+  desc = 'Open [t]erminal in a [h]orizontal split',
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -823,12 +830,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
+          --{
+          --  'rafamadriz/friendly-snippets',
+          --  config = function()
+          --    require('luasnip.loaders.from_vscode').lazy_load()
+          --  end,
+          --},
         },
         opts = {},
       },
