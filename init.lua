@@ -296,7 +296,33 @@ require('lazy').setup({
       },
     },
   },
+  { -- Bufferline (IDE-style buffer tabs)
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
 
+    config = function()
+      -- 1. 定义配置 table（拆开，便于理解和维护）
+      local bufferline_opts = {
+        options = {
+          mode = "buffers",              -- 按 buffer 显示（不是 tab）
+          diagnostics = "nvim_lsp",       -- 显示 LSP 诊断信息
+          separator_style = "slant",      -- 分隔符样式
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          always_show_bufferline = true,
+        },
+      }
+
+      -- 2. 调用 setup
+      require("bufferline").setup(bufferline_opts)
+
+      -- 3. 常用快捷键（buffer 切换）
+      vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { silent = true })
+      vim.keymap.set("n", "<S-l>", ":bnext<CR>", { silent = true })
+      vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { silent = true })
+    end,
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
