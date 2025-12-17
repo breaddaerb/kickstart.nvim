@@ -828,6 +828,7 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
+        ["<CR>"] = { "accept", "fallback" }, -- 有补全就确认，否则回车换行
         preset = 'default',
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
