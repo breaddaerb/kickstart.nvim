@@ -716,7 +716,8 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-        ['python-lsp-server'] = {},
+        ['python-lsp-server'] = false,
+        pyright={},
 
         lua_ls = {
           -- cmd = { ... },
