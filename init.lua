@@ -742,8 +742,23 @@ require('lazy').setup({
         -- ts_ls = {},
         --
         ['python-lsp-server'] = false,
-        pyright={},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "basic", -- 或 "off"
 
+                -- 关闭常见 None/Optional 相关报错
+                reportOptionalMemberAccess = "none",
+                reportOptionalSubscript = "none",
+                reportOptionalCall = "none",
+                reportOptionalIterable = "none",
+                reportOptionalContextManager = "none",
+                reportOptionalOperand = "none",
+              },
+            },
+          },
+        },
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -919,7 +934,11 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
+  -- Comment code
+  {
+    "numToStr/Comment.nvim",
+    opts = {}, --'gc' to toggle a block 
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
