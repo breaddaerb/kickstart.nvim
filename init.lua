@@ -1076,6 +1076,13 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+
+      -- 启用 Tree-sitter 折叠
+      vim.opt.foldlevel = 99  -- 默认展开，不然看不到折叠的块
+      vim.opt.foldmethod = "indent"
+    end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
