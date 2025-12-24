@@ -976,6 +976,88 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+  {
+    -- python debug: DAP
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      { 
+        'rcarriga/nvim-dap-ui',
+        dependencies = {
+          'mfussenegger/nvim-dap',
+          'nvim-neotest/nvim-nio',
+        }
+      },
+    'theHamsta/nvim-dap-virtual-text',
+    },
+    config = function()
+      local dap = require('dap')
+      local dapui = require('dapui')
+
+      dapui.setup()
+      require("nvim-dap-virtual-text").setup()
+
+      -- 自动打开/关闭 DAP UI
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+
+      local function detect_python()
+        local cwd = vim.fn.getcwd()
+        local paths = {
+          cwd .. '/.venv/bin/python',
+          cwd .. '/venv/bin/python'
+        }
+        for _, path in ipairs(paths) do
+          if vim.fn.executable(path) == 1 then
+            return path
+          end
+        end
+        local conda_prefix = os.getenv("CONDA_PREFIX")
+        if conda_prefix and vim.fn.executable(conda_prefix .. '/bin/python') == 1 then
+          return conda_prefix .. '/bin/python'
+        end
+        return 'python3'
+      end
+
+      local python_path = detect_python()
+
+      dap.adapters.python = {
+        type = 'executable';
+        command = python_path;
+        args = { '-m', 'debugpy.adapter' };
+      }
+
+      dap.configurations.python = {
+        {
+          type = 'python';
+          request = 'launch';
+          name = "Launch current file";
+          program = "${file}";
+          pythonPath = function()
+            return python_path
+          end;
+        },
+      }
+
+      -- 快捷键绑定
+      vim.keymap.set('n', '<F5>', dap.continue, { desc = "DAP Continue" })
+      vim.keymap.set('n', '<F10>', dap.step_over, { desc = "DAP Step Over" })
+      vim.keymap.set('n', '<F11>', dap.step_into, { desc = "DAP Step Into" })
+      vim.keymap.set('n', '<F12>', dap.step_out, { desc = "DAP Step Out" })
+      vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
+      vim.keymap.set('n', '<leader>B', function()
+        dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+      end, { desc = "Conditional Breakpoint" })
+      vim.keymap.set('n', '<leader>dr', dap.repl.open, { desc = "Open REPL" })
+      vim.keymap.set('n', '<leader>dl', dap.run_last, { desc = "Run Last" })
+    end,
+  },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
