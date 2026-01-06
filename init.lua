@@ -91,6 +91,17 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.background = 'dark'
 vim.opt.clipboard = 'unnamedplus' --using system clipboard
+-- Delete without yanking
+vim.keymap.set({"n", "v"}, "d", '"_d')
+vim.keymap.set({"n", "v"}, "D", '"_D')
+vim.keymap.set({"n", "v"}, "c", '"_c')
+vim.keymap.set({"n", "v"}, "C", '"_C')
+vim.keymap.set({"n", "v"}, "x", '"_x')
+
+-- Keep the original behavior available with leader key if needed
+vim.keymap.set({"n", "v"}, "<leader>d", "d")
+vim.keymap.set({"n", "v"}, "<leader>c", "c")
+
 vim.opt.hlsearch = true
 vim.o.ttimeout = true
 vim.o.timeoutlen = 100
