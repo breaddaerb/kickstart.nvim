@@ -948,7 +948,7 @@ require('lazy').setup({
   -- Comment code
   {
     "numToStr/Comment.nvim",
-    opts = {}, --'gc' to toggle a block 
+    opts = {}, --'gc' to toggle a block, 'gcc' to toggle a line 
   },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
