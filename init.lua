@@ -116,6 +116,47 @@ vim.keymap.set('n', '<leader>termh', ':below split | terminal<CR>', {
   desc = 'Open [t]erminal in a [h]orizontal split',
 })
 
+-- indent
+-- 全局兜底：2 空格（适配大多数 web / 配置文件）
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
+
+-- Python：4 空格
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.tabstop = 4
+  end,
+})
+
+-- Go：tab（交给 gofmt）
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.shiftwidth = 0
+    vim.opt_local.softtabstop = 0
+    vim.opt_local.tabstop = 8
+  end,
+})
+
+-- Makefile：必须 tab
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "make",
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.shiftwidth = 8
+    vim.opt_local.softtabstop = 0
+    vim.opt_local.tabstop = 8
+  end,
+})
+
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
