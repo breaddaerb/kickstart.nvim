@@ -793,6 +793,18 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
         --
+        rust_analyzer = {
+          settings = {
+            ['rust-analyzer'] = {
+              cargo = {
+                allFeatures = true,
+              },
+              checkOnSave = {
+                command = "clippy",  -- 用 clippy 替代默认 check，更严格
+              },
+            },
+          },
+        },
         ['python-lsp-server'] = false,
         pyright = {
           settings = {
